@@ -1,0 +1,423 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAKHA - AI-Powered Technical Interview Prep</title>
+    <meta name="description" content="SAKHA is an AI-powered platform that helps students prepare for technical interviews through personalized coding roadmaps, real-time doubt solving, and smart performance analytics.">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <style>
+        :root {
+            --primary-color: #4A90E2; /* A vibrant blue */
+            --secondary-color: #50E3C2; /* A complementary teal */
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --dark-bg: #2c3e50; /* Darker blue-grey for headings */
+            --border-radius: 8px;
+            --spacing-unit: 1.5rem;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #fff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+        }
+        header {
+            background-color: #fff;
+            padding: var(--spacing-unit) 0;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: var(--spacing-unit);
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: 1px solid var(--primary-color);
+        }
+        .btn-primary:hover {
+            background-color: #3a7bd5; /* Darker shade */
+            border-color: #3a7bd5;
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+        section {
+            padding: calc(3 * var(--spacing-unit)) 0;
+            text-align: center;
+        }
+        section:nth-of-type(even) {
+            background-color: var(--light-bg);
+        }
+        h1, h2, h3 {
+            color: var(--dark-bg);
+            margin-bottom: var(--spacing-unit);
+            line-height: 1.2;
+        }
+        h1 {
+            font-size: 3rem;
+        }
+        h2 {
+            font-size: 2.2rem;
+        }
+        h3 {
+            font-size: 1.6rem;
+        }
+        p {
+            margin-bottom: var(--spacing-unit);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #6a11cb 100%); /* Gradient background */
+            color: #fff;
+            padding: calc(5 * var(--spacing-unit)) 0;
+            text-align: center;
+        }
+        .hero h1 {
+            color: #fff;
+            font-size: 3.8rem;
+            margin-bottom: var(--spacing-unit);
+        }
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: calc(2 * var(--spacing-unit));
+            opacity: 0.9;
+        }
+        .hero .btn {
+            font-size: 1.2rem;
+            padding: 1rem 2rem;
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: var(--dark-bg);
+        }
+        .hero .btn:hover {
+            background-color: #42c1a8; /* Darker secondary */
+            border-color: #42c1a8;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: calc(2 * var(--spacing-unit));
+            margin-top: calc(2 * var(--spacing-unit));
+        }
+        .feature-item {
+            background-color: #fff;
+            padding: calc(1.5 * var(--spacing-unit));
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .feature-item h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+        .feature-item p {
+            font-size: 1rem;
+            margin-bottom: 0;
+            max-width: none;
+        }
+        .problem-solution {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: calc(2 * var(--spacing-unit));
+            margin-top: calc(2 * var(--spacing-unit));
+        }
+        .problem-solution > div {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            text-align: left;
+            padding: calc(1.5 * var(--spacing-unit));
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+        .problem-solution .problem {
+            background-color: #ffebee; /* Light red */
+            border: 1px solid #ef9a9a;
+        }
+        .problem-solution .solution {
+            background-color: #e8f5e9; /* Light green */
+            border: 1px solid #a5d6a7;
+        }
+        .problem-solution h3 {
+            color: var(--dark-bg);
+            margin-top: 0;
+        }
+        .problem-solution p {
+            font-size: 1rem;
+            max-width: none;
+        }
+        .problem-solution ul {
+            list-style: none;
+            padding: 0;
+            margin-top: var(--spacing-unit);
+        }
+        .problem-solution ul li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 1rem;
+        }
+        .problem-solution .problem ul li::before {
+            content: '✖';
+            color: #d32f2f;
+            position: absolute;
+            left: 0;
+        }
+        .problem-solution .solution ul li::before {
+            content: '✔';
+            color: #388e3c;
+            position: absolute;
+            left: 0;
+        }
+        #testimonials p {
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        #testimonials strong {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            color: var(--primary-color);
+        }
+        .cta-section {
+            background-color: var(--dark-bg);
+            color: #fff;
+            padding: calc(4 * var(--spacing-unit)) 0;
+        }
+        .cta-section h2 {
+            color: #fff;
+            margin-bottom: var(--spacing-unit);
+        }
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: calc(2 * var(--spacing-unit));
+            opacity: 0.9;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: calc(2 * var(--spacing-unit)) 0;
+            font-size: 0.9rem;
+        }
+        footer .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-unit);
+        }
+        footer .footer-nav ul {
+            display: flex;
+            gap: var(--spacing-unit);
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        footer .footer-nav a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer .footer-nav a:hover {
+            color: var(--primary-color);
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.8rem; }
+            .hero h1 { font-size: 2.8rem; }
+            nav ul { display: none; } /* Simple mobile nav hide for brevity */
+            header .container { flex-direction: column; gap: var(--spacing-unit); }
+            .hero .btn { font-size: 1rem; padding: 0.8rem 1.5rem; }
+            .problem-solution > div { min-width: unset; }
+            .logo { margin-bottom: var(--spacing-unit); }
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            .hero h1 { font-size: 2.2rem; }
+            p { font-size: 1rem; }
+            .hero p { font-size: 1.1rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            .problem-solution { flex-direction: column; }
+            footer .footer-nav ul { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">SAKHA</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <a href="pricing.html" class="btn btn-primary">Get Started Free</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Crack Your Technical Interview with SAKHA: Your AI-Powered Edge.</h1>
+                <p>Unlock personalized coding roadmaps, real-time doubt solving, and smart analytics designed to transform your interview prep and land your dream tech job.</p>
+                <a href="pricing.html" class="btn btn-primary">Start Your Free Personalized Roadmap</a>
+            </div>
+        </section>
+
+        <section id="features">
+            <div class="container">
+                <h2>How SAKHA Empowers Your Prep</h2>
+                <p>Leverage cutting-edge AI to overcome common interview challenges and build confidence, helping you improve faster and more efficiently.</p>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3>Personalized Coding Roadmaps</h3>
+                        <p>Our AI analyzes your skills and generates a custom learning path, focusing on your specific weak areas for maximum efficiency and targeted improvement.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Real-time Doubt Solving</h3>
+                        <p>Get instant, intelligent explanations and solutions to your coding questions. Our platform ensures you never get stuck, providing clarity when you need it most.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Smart Performance Analytics</h3>
+                        <p>Track your progress with detailed insights, identify patterns in your mistakes, and watch your improvement accelerate with data-driven feedback.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Adaptive Practice Problems</h3>
+                        <p>Practice with AI-generated problems that dynamically adapt to your learning curve, making every session count towards mastery and skill reinforcement.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="problem-solution">
+            <div class="container">
+                <h2>The SAKHA Difference: Solving Your Biggest Challenges</h2>
+                <div class="problem-solution">
+                    <div class="problem">
+                        <h3>The Problem: Generic Prep & Frustration</h3>
+                        <p>Many students struggle with technical interviews due to a lack of personalized feedback, inefficient study methods, and difficulty pinpointing their true weak areas. You spend hours studying, but often feel like you're not making real progress.</p>
+                        <ul>
+                            <li>Lack of personalized feedback and guidance.</li>
+                            <li>Inefficient use of time and resources in preparation.</li>
+                            <li>Difficulty in identifying and improving weak areas.</li>
+                        </ul>
+                    </div>
+                    <div class="solution">
+                        <h3>The Solution: Intelligent, Adaptive Learning</h3>
+                        <p>SAKHA revolutionizes your preparation by providing a comprehensive, AI-driven platform that understands your unique needs. We turn your weaknesses into strengths with targeted, adaptive learning.</p>
+                        <ul>
+                            <li>AI-powered personalized coding roadmaps tailored to individual needs.</li>
+                            <li>Instant, real-time doubt resolution and feedback.</li>
+                            <li>Smart performance analytics to track progress and identify weak areas.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials">
+            <div class="container">
+                <h2>What Students Are Saying</h2>
+                <p>"SAKHA helped me identify my weak areas in data structures and algorithms, leading to a successful offer from Google! The personalized roadmap was a game-changer."</p>
+                <strong>— Alex P., Computer Science Graduate</strong>
+                <p>"The real-time doubt solving is incredible. It's like having a personal tutor available 24/7. Highly recommend SAKHA for anyone serious about tech interviews."</p>
+                <strong>— Sarah L., Aspiring Software Engineer</strong>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to Ace Your Next Technical Interview?</h2>
+                <p>Join thousands of students who are transforming their interview prep with SAKHA's intelligent platform. Your dream job is within reach.</p>
+                <a href="pricing.html" class="btn btn-primary">Explore SAKHA Today</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 SAKHA. All rights reserved.</p>
+            <div class="footer-nav">
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Support</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+```
